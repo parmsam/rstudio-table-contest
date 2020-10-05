@@ -45,13 +45,13 @@ colorBars <- function(df, column, color) {
   
 table <- mpg %>% 
   datatable(selection = "single", extensions=c("Buttons","ColReorder", "Responsive"), 
-            filter = list(position = 'bottom', clear = FALSE, plain = TRUE), 
+            filter = list(position = 'top', clear = FALSE, plain = TRUE), 
             class = 'cell-border stripe',
     options=list(searchHighlight= FALSE, pagelength =5, lengthMenu = list(c(10, 20, 50, -1),c("10","20","50","All")), hover=TRUE,
-                 dom='tlBfrtip', colReorder = TRUE, keys=TRUE,
+                 dom='tlfrtBip', colReorder = TRUE, keys=TRUE,
                  columnDefs = list(list(searchable = FALSE)),
                  fixedColumns = TRUE,
-                buttons= list('copy', list(
+                buttons= list('copy', list(textAlign='center',
         extend = 'collection',
         buttons = list(list(extend='csv',filename='mpg_summary.csv'), list(extend='excel',filename='mpg_summary.xlsx')),
         text = 'Download'
