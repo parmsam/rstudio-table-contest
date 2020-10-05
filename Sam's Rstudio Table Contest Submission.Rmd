@@ -58,7 +58,7 @@ table <- mpg %>%
                  fixedColumns = TRUE,
                 buttons= list('copy', list(textAlign='center',
         extend = 'collection',
-        buttons = list(list(extend='csv',filename='mpg_summary.csv'), list(extend='excel',filename='mpg_summary.xlsx')),
+        buttons = list(list(extend='csv',filename='mpg_summary'), list(extend='excel',filename='mpg_summary')),
         text = 'Download'
       )),
                  list(colReorder = TRUE)
