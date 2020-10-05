@@ -32,7 +32,7 @@ The work here was created for the [2020 Rstudio Table Contest](https://blog.rstu
 
 The [DT](https://rstudio.github.io/DT/), [Tidyverse](https://www.tidyverse.org/), and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf) packages were used.
 
-# Code and Table
+# Code
 ```{r cars}
 colorBars <- function(df, column, color) {
   df1 <- df %>% formatStyle(column,
@@ -43,7 +43,7 @@ colorBars <- function(df, column, color) {
   return(df1)
 }
   
-mpg %>% 
+table <- mpg %>% 
   datatable(selection = "single", extensions=c("Buttons","ColReorder", "Responsive"), 
             filter = list(position = 'bottom', clear = FALSE, plain = TRUE), 
             class = 'cell-border stripe',
@@ -64,6 +64,11 @@ colorBars("cty", 'lightgreen') %>%
 formatStyle('manufacturer', fontWeight = 'bold',color='black',textAlign = 'center',
      backgroundColor = styleEqual(unique(mpg$manufacturer), colorRampPalette(c('#d75027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837' ))(n_distinct(mpg$manufacturer)))
   )
+```
+
+# Table
+```{r echo=FALSE}
+table
 ```
 
 # Sources
