@@ -6,7 +6,6 @@ date: "10/3/2020"
 output: 
   html_document:
     toc: true
-    number_sections: true
     theme: simplex
 ---
 
@@ -15,8 +14,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(DT)
 library(RColorBrewer)
+library(sessioninfo)
 ```
 
+```{css, echo=FALSE}
+.header-section-number::after {
+  content: ".";
+}
+```
 # Background
 The work here was created for the [2020 Rstudio Table Contest](https://blog.rstudio.com/2020/09/15/announcing-the-2020-rstudio-table-contest/). The code provided was used to develop an interactive table in an interactive HTML page using R markdown. The interactive table below takes advantage of the following features from the [DT package](https://rstudio.github.io/DT/):
 
@@ -78,3 +83,21 @@ The following sources were consulted in building this submission.
 * https://rstudio.github.io/DT/
 * https://www.youtube.com/watch?v=yott4quKN6s&ab_channel=LanderAnalytics
 * https://stackoverflow.com/questions/53265769/dtdatatables-generated-html-table-shows-display-anomalies-missing-character
+* https://data-se.netlify.app/2019/01/14/a-clean-sessioninfo-page/
+
+# Source code
+* Github repo [here](https://github.com/parmsam/rstudio-table-contest)
+
+# Session Info
+```{r echo=FALSE}
+si <- session_info()
+pl <- map2(si$packages$package, 
+              si$packages$loadedversion,
+     ~ paste0(.x, " ", .y)) %>% 
+  simplify()
+
+```
+- OS: `r si$platform$os`
+- Version: `r si$platform$version`
+- Date: `r si$platform$date`
+- Packages: `r pl`
