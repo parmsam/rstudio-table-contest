@@ -1,0 +1,74 @@
+---
+title: "RStudio Table Contest"
+author: "Sam Parmar"
+github: www.github.com/parmsam
+date: "10/3/2020"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    theme: simplex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(DT)
+library(RColorBrewer)
+```
+
+# Background
+The work here was created for the [2020 Rstudio Table Contest](https://blog.rstudio.com/2020/09/15/announcing-the-2020-rstudio-table-contest/). The code provided was used to develop an interactive table in an interactive HTML page using R markdown. The interactive table below takes advantage of the following features from the [DT package](https://rstudio.github.io/DT/):
+
+* cell background coloring 
+* cell color bars
+* bold column font
+* copy and download buttons
+* number entries dropdown menu for user selection
+* term search feature
+* column filters
+* column reordering
+* responsive table to handle window resize
+
+The [DT](https://rstudio.github.io/DT/), [Tidyverse](https://www.tidyverse.org/), and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf) packages were used.
+
+# Code and Table
+```{r cars}
+colorBars <- function(df, column, color) {
+  df1 <- df %>% formatStyle(column,
+  background = styleColorBar(range(mpg[column]), color),
+  backgroundSize = '100% 50%',
+  backgroundRepeat = 'no-repeat',
+  backgroundPosition = 'center')
+  return(df1)
+}
+  
+mpg %>% 
+  datatable(selection = "single", extensions=c("Buttons","ColReorder", "Responsive"), 
+            filter = list(position = 'bottom', clear = FALSE, plain = TRUE), 
+            class = 'cell-border stripe',
+    options=list(searchHighlight= TRUE, pagelength =5, lengthMenu = list(c(10, 20, 50, -1),c("10","20","50","All")), hover=TRUE,
+                 dom='tlBfrtip', colReorder = TRUE, keys=TRUE,
+                 fixedColumns = TRUE,
+                buttons= list('copy', list(
+        extend = 'collection',
+        buttons = list(list(extend='csv',filename='mpg_summary.csv'), list(extend='excel',filename='mpg_summary.xlsx')),
+        text = 'Download'
+      )),
+                 list(colReorder = TRUE)
+                 )) %>% 
+colorBars("displ", 'lightblue') %>%
+colorBars("hwy", 'coral') %>%
+colorBars("cyl", 'orange') %>%
+colorBars("cty", 'lightgreen') %>% 
+formatStyle('manufacturer', fontWeight = 'bold',color='black',textAlign = 'center',
+     backgroundColor = styleEqual(unique(mpg$manufacturer), colorRampPalette(c('#d75027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837' ))(n_distinct(mpg$manufacturer)))
+  )
+```
+
+# Sources
+The following sources were consulted in building this submission.
+
+* https://rstudio.github.io/DT/
+* https://www.youtube.com/watch?v=yott4quKN6s&ab_channel=LanderAnalytics
+
