@@ -17,6 +17,7 @@ library(tidyverse)
 library(DT)
 library(RColorBrewer)
 library(readxl)
+library(lubridate)
 library(sessioninfo)
 
 ```
@@ -64,7 +65,11 @@ colorBars <- function(df, column, color) {
 }
 covid19_policy <- read_csv("https://raw.githubusercontent.com/parmsam/rstudio-table-contest/main/state_policy_updates_20201022_2346.csv") %>% 
   mutate(website = str_extract(source,"https://.*")) %>%
-  mutate(website = str_c('<a  target=_blank href=', website, '>', 'Click Here','</a>' ))
+  mutate(website = str_c('<a  target=_blank href=', website, '>', 'Click Here','</a>' )) %>%
+  mutate(date = as_date(date)) %>%
+  filter(date > "2020-01-20") 
+
+#filter out any pre-first USA case policy order data b/c entry error on date
 
 state_abbrev <- read_csv("https://raw.githubusercontent.com/parmsam/rstudio-table-contest/main/State%20Abbreviations.csv")
 covid19_policy <- covid19_policy %>% left_join(state_abbrev, by="state_id") %>%
